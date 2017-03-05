@@ -4,6 +4,7 @@ namespace FormationBundle\Controller;
 
 use FormationBundle\Entity\Formation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -43,9 +44,9 @@ class FormationController extends Controller
         ));
     }
 
-    public function createAction()
+    public function createAction(Request $request)
     {
-
+        VarDumper::dump($request); die;
         $em = $this->getDoctrine()->getManager();
 
         $formation = new Formation();
