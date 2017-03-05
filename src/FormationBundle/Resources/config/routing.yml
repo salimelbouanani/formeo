@@ -1,3 +1,51 @@
 formation_homepage:
-    path:     /
+    path:     /home
     defaults: { _controller: FormationBundle:Default:index }
+
+formation_demo:
+    path:   /demo
+    defaults: {_controller: FormationBundle:Default:demo}
+
+formation_index:
+    path:     /
+    defaults: { _controller: FormationBundle:Formation:index }
+
+formation_show:
+    path:     /formation/show/{id}
+    defaults: { _controller: FormationBundle:Formation:show, id: 1}
+    requirements: { id: "\d+" }
+    methods: [GET]
+
+formation_edit:
+    path:     /edit/{id}
+    defaults: { _controller: FormationBundle:Formation:edit }
+
+formation_create:
+    path:     /formation/create
+    defaults: { _controller: FormationBundle:Formation:create }
+
+pointage_index:
+    path:     /pointage
+    defaults: { _controller: FormationBundle:Pointage:index }
+
+pointage_create:
+    path:     /create
+    defaults: { _controller: FormationBundle:Pointage:create }
+
+pointage_show:
+    path:     /pointage/show/{id}
+    defaults: { _controller: FormationBundle:Pointage:show, id: 1}
+    requirements: { id: "\d+" }
+    methods: [GET]
+
+pointage_edit:
+    path:     /pointage/edit/{id}
+    defaults: { _controller: FormationBundle:Pointage:edit }
+
+pointage_delete:
+    path:     /pointage/delete/{id}
+    defaults: { _controller: FormationBundle:Pointage:delete }
+
+pointage_affect:
+    path:     /pointage/affect/{id}
+    defaults: { _controller: FormationBundle:Pointage:affect }
