@@ -12,6 +12,7 @@ class FormationController extends Controller
 {
     public function indexAction()
     {
+        //redirection
         $url = $this->generateUrl('formation_homepage');
         return $this->redirectToRoute('formation_homepage');
 
