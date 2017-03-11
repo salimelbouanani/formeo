@@ -3,64 +3,123 @@
 namespace FormationBundle\Controller;
 
 use FormationBundle\Entity\Formation;
+use FormationBundle\Form\FormationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\VarDumper\VarDumper;
 
+/**
+ * Formation controller.
+ *
+ */
 class FormationController extends Controller
 {
+    /**
+     * Lists all formation entities.
+     *
+     */
     public function indexAction()
     {
-        //redirection
-        $url = $this->generateUrl('formation_homepage');
-        return $this->redirectToRoute('formation_homepage');
+        $em = $this->getDoctrine()->getManager();
 
-        return $this->render('FormationBundle:Formation:index.html.twig', array(
-            // ...
+        $formations = $em->getRepository('FormationBundle:Formation')->findAll();
+
+        return $this->render('formation/index.html.twig', array(
+            'formations' => $formations,
         ));
     }
 
-    public function showAction($id)
+    /**
+     * Creates a new formation entity.
+     *
+     */
+    public function newAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $formation = new Formation();
+        $form = $this->createForm(FormationType::class, $formation);
+        $form->handleRequest($request);
 
-        $rep = $em->getRepository('FormationBundle:Formation');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($formation);
+            $em->flush($formation);
 
-        $formation = $rep->find($id);
-
-        if (empty($formation)){
-            return new Response($this->createNotFoundException());
+            return $this->redirectToRoute('formation_show', array('id' => $formation->getId()));
         }
 
-        return $this->render('FormationBundle:Formation:show.html.twig', array(
-            'formation'    => $formation
+        return $this->render('formation/new.html.twig', array(
+            'formation' => $formation,
+            'form' => $form->createView(),
         ));
     }
 
-    public function editAction($id)
+    /**
+     * Finds and displays a formation entity.
+     *
+     */
+    public function showAction(Formation $formation)
     {
-        return $this->render('FormationBundle:Formation:edit.html.twig', array(
-            // ...
+        $deleteForm = $this->createDeleteForm($formation);
+
+        return $this->render('formation/show.html.twig', array(
+            'formation' => $formation,
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    public function createAction(Request $request)
+    /**
+     * Displays a form to edit an existing formation entity.
+     *
+     */
+    public function editAction(Request $request, Formation $formation)
     {
-        VarDumper::dump($request); die;
-        $em = $this->getDoctrine()->getManager();
+        $deleteForm = $this->createDeleteForm($formation);
+        $editForm = $this->createForm('FormationBundle\Form\FormationType', $formation);
+        $editForm->handleRequest($request);
 
-        $formation = new Formation();
-        $formation->setTitle("Symfony");
-        $formation->setPrice(1000);
-        $formation->setDateStart(new \DateTime());
-        $formation->setDateEnd(new \DateTime());
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-        $em->persist($formation);
-        $em->flush();
+            return $this->redirectToRoute('formation_edit', array('id' => $formation->getId()));
+        }
 
-        return $this->render('FormationBundle:Formation:create.html.twig', array(
-            // ...
+        return $this->render('formation/edit.html.twig', array(
+            'formation' => $formation,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Deletes a formation entity.
+     *
+     */
+    public function deleteAction(Request $request, Formation $formation)
+    {
+        $form = $this->createDeleteForm($formation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($formation);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('formation_index');
+    }
+
+    /**
+     * Creates a form to delete a formation entity.
+     *
+     * @param Formation $formation The formation entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Formation $formation)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('formation_delete', array('id' => $formation->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
 }

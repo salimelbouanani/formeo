@@ -1,0 +1,49 @@
+{% block form_widget_simple %}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {% if errors|length > 0 %}class="form-control has-error"{% else %}class="form-control"{% endif %}  {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endblock form_widget_simple %}
+
+{%- block textarea_widget -%}
+    <textarea {% if errors|length > 0 %}class="form-control has-error"{% else %}class="form-control"{% endif %} {{ block('widget_attributes') }}>{{ value }}</textarea>
+{%- endblock textarea_widget -%}
+
+{% block form_row %}
+    <div class="row-fluid">
+        <div {% if errors|length > 0 %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endblock form_row %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="errors">
+                {% for error in errors %}
+                    <li class="bold error">{{
+                        error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button class="btn btn-primary" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}
+

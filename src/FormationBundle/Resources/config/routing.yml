@@ -1,3 +1,7 @@
+formation_formation:
+    resource: "@FormationBundle/Resources/config/routing/formation.yml"
+    prefix:   /_formation
+
 formation_homepage:
     path:     /home
     defaults: { _controller: FormationBundle:Default:index }

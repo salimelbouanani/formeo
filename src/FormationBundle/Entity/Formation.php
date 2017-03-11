@@ -3,6 +3,7 @@
 namespace FormationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Formation
@@ -25,6 +26,7 @@ class Formation
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -45,14 +47,16 @@ class Formation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateStart", type="datetimetz", nullable=true)
+     * @ORM\Column(name="dateStart", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $dateStart;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateEnd", type="datetimetz", nullable=true)
+     * @ORM\Column(name="dateEnd", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $dateEnd;
 
