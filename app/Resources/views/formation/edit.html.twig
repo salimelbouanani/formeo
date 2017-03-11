@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% form_theme edit_form '::Form/fields.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panle-title">
+                    Formation edit
+                </div>
+            </div>
+            <div class="panel-body">
+                {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <span class="text-right"><input class="btn btn-primary" type="submit" value="Edit" /></span>
+                {{ form_end(edit_form) }}
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group" role="group" aria-label="...">
+                    {{ form_start(delete_form) }}
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                    <a class="btn btn-default" href="{{ path('formation_index') }}">Back to the list</a>
+                    {{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
