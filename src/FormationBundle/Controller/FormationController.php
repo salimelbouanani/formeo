@@ -34,6 +34,10 @@ class FormationController extends Controller
      */
     public function newAction(Request $request)
     {
+        if (!$this->isGranted('ROLE_ADMIN')){
+            throw $this->createNotFoundException();
+        }
+        ;
         $formation = new Formation();
         $form = $this->createForm(FormationType::class, $formation);
         $form->handleRequest($request);

@@ -1,0 +1,29 @@
+teacher_index:
+    path:     /index
+    defaults: { _controller: "FormationBundle:Teacher:index" }
+    methods:  GET
+
+teacher_home:
+    path:     /
+    defaults: { _controller: "FormationBundle:Teacher:index" }
+    methods:  GET
+
+teacher_show:
+    path:     /{id}/show
+    defaults: { _controller: "FormationBundle:Teacher:show" }
+    methods:  GET
+
+teacher_new:
+    path:     /new
+    defaults: { _controller: "FormationBundle:Teacher:new" }
+    methods:  [GET, POST]
+
+teacher_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FormationBundle:Teacher:edit" }
+    methods:  [GET, POST]
+
+teacher_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FormationBundle:Teacher:delete" }
+    methods:  DELETE

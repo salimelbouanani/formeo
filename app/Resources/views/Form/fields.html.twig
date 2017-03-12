@@ -44,6 +44,6 @@
             {% set label = name|humanize %}
         {%- endif -%}
     {%- endif -%}
-    <button class="btn btn-primary" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+    <button class="btn btn-action" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
 {%- endblock button_widget -%}
 

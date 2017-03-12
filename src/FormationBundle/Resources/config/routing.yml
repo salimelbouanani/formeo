@@ -2,6 +2,10 @@ formation_formation:
     resource: "@FormationBundle/Resources/config/routing/formation.yml"
     prefix:   /_formation
 
+formation_teacher:
+    resource: "@FormationBundle/Resources/config/routing/teacher.yml"
+    prefix:   /_teacher
+
 formation_homepage:
     path:     /home
     defaults: { _controller: FormationBundle:Default:index }
@@ -9,6 +13,10 @@ formation_homepage:
 formation_demo:
     path:   /demo
     defaults: {_controller: FormationBundle:Default:demo}
+
+formation_newTeacher:
+    path: /newTeacher
+    defaults: {_controller: FormationBundle:Default:newTeacher}
 
 formation_index:
     path:     /
@@ -53,3 +61,7 @@ pointage_delete:
 pointage_affect:
     path:     /pointage/affect/{id}
     defaults: { _controller: FormationBundle:Pointage:affect }
+
+formation_student:
+    resource: "@FormationBundle/Resources/config/routing/student.yml"
+    prefix:   /_student
